@@ -15,7 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
+from app_urls import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('shorten',views.shortenView,name="shorten"),
+    url(r'^(?P<shortcode>[a-zA-Z0-9]{6})$', views.shortcodeView, name='shortcode'),
+    url(r'^(?P<shortcode>[a-zA-Z0-9]{6})/stats$', views.shortcodeStatsView, name='shortcodeStats'),
 ]
