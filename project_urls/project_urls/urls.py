@@ -21,6 +21,6 @@ from app_urls import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('shorten',views.shortenView,name="shorten"),
-    url(r'^(?P<shortcode>[a-zA-Z0-9]{6})$', views.shortcodeView, name='shortcode'),
-    url(r'^(?P<shortcode>[a-zA-Z0-9]{6})/stats$', views.shortcodeStatsView, name='shortcodeStats'),
+    url(r'^(?P<shortcode>[a-zA-Z0-9_]{6})$', views.shortcodeView, name='shortcode'),
+    url(r'^(?P<shortcode>[a-zA-Z0-9_]{6})/stats$', views.shortcodeStatsView, name='shortcodeStats'),
 ]
