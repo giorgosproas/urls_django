@@ -35,3 +35,11 @@ def successfulResponse(statusCode,context):
     response.accepted_media_type = "application/json"
     response.renderer_context = {}
     return response
+
+def redirectResponse(statusCode,url):
+    successfulRedirectMapping={"302":status.HTTP_302_FOUND}
+
+    response = Response(status=successfulRedirectMapping[statusCode])
+    response["Location"]=url
+    print(url)
+    return response

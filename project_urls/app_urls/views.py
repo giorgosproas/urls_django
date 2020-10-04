@@ -1,10 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import api_view
 
-from app_urls.utils.response import errorResponse, successfulResponse
+from app_urls.utils.response import errorResponse, successfulResponse, redirectResponse
 from app_urls.utils.regexUtils import isValidShortcode
 from app_urls.utils.shortcodeGenerator import get_shortcode
 from app_urls.utils.datetimeUtils import militaryTimeNow
@@ -65,8 +65,11 @@ def shortenView(request):
 @csrf_exempt     
 def shortcodeView(request,shortcode):
     if URLS.objects.filter(shortcode=shortcode).exists():
-        #TODO
-        pass
+        obj = URLS.objects.filter(shortcode=shortcode)[0]
+        obj.redirectCount+=1
+        obj.lastRedirect=militaryTimeNow()
+        obj.save()
+        return redirectResponse("302",obj.url)
     else:
         return errorResponse("404","Shortcode not found")
 
