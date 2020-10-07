@@ -1,6 +1,8 @@
 # urls_django
 get/post API django
 
+#
+export DJANGO_SETTINGS_MODULE=project_urls.settings
 
 # How to run
 Having docker installed:
