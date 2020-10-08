@@ -6,3 +6,7 @@ ip="localhost"
 
 urlShorten = "http://{}:8000/shorten".format(ip)
 url = "http://{}:8000/ewx123/stats".format(ip)
+
+
+testValueShortcode="999999"
+testValueUrl="http://www.google.pl"
