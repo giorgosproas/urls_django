@@ -4,7 +4,7 @@ import json
 
 from app_urls.tests import constants
 from app_urls.models import URLS
-from app_urls.utils.datetimeUtils import militaryTimeNow
+from app_urls.utils.datetimeUtils import militaryTimeNow, compareMilitaryTime
 
 def test_stats_notFoundShortcode():
 
@@ -59,6 +59,10 @@ def test_stats_smoke():
     jsonResponse = request.json()
     assert jsonResponse["redirectCount"]==1
 
-    #TODO check last redirect is less than 5 seconds from datetime.datetime.now()
-    #TODO check created is less than 5 seconds from datetime.datetime.now()
+    #!TODO: The two checks below must become more precise
+    # assert last redirect is less than 5 seconds now
+    assert(compareMilitaryTime(militaryTimeNow(),jsonResponse["lastRedirect"]).seconds<=5)
+
+    # assert time created is less than 5 seconds now
+    assert(compareMilitaryTime(militaryTimeNow(),jsonResponse["created"]).seconds<=5)
 
