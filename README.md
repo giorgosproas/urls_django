@@ -13,7 +13,7 @@ docker run -dit -p 8000:8000 django-docker:latest
 
 
 
-# ASSUMPTIONS
+# ASSUMPTIONS/ Other Details
 1. When someone requests GET /<shortcode> we have to select check how this will be
    handled by the backend. I could create a view which checks if the value
    <shortcode> is valid or not and return the message respectively. However,
@@ -25,4 +25,8 @@ docker run -dit -p 8000:8000 django-docker:latest
    someone to a specific URL. Making the URL not unique would mess the system and 
    would not fullfill our real application target
 
-3. 
+3. We could test the django app by using its own testing way but i prefered to use pytest for
+   that because it is more generic. The code might seem a little bit repetitive but i tried 
+   to cover the cases by deleting or adding a new row in the database as needed. Also because
+   of time limitations i didnt add fixtures (and thats the main reason the code seems repetitive)
+   In case more time is available the pytests have to fixed and fixtures have to be used instead.
