@@ -1,9 +1,10 @@
 # How to run
-Having docker installed:
 
-1.Go inside folder /projects_urls
-2.run: docker build -t django-docker .
-3.run: docker run -dit -p 8000:8000 django-docker:latest
+Prerequisites: Having docker on linux/Mac Machine
+
+1. Go to urls_django/
+2. run: docker build -t django-docker .
+3. run: docker run -dit -p 8000:8000 django-docker:latest
 4. After the container has been created do docker ps and see the
    id (CONTAINER_ID) of the just created container
 5. Copy this id. Below it will be mentioned as CONTAINER_ID
