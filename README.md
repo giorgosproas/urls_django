@@ -6,9 +6,20 @@ export DJANGO_SETTINGS_MODULE=project_urls.settings
 
 # How to run
 Having docker installed:
+Go inside folder /projects_urls
 docker build -t django-docker .
 docker run -dit -p 8000:8000 django-docker:latest
 
+Do docker ps and see the id of the just created container
+Copy this id. Below it will be mentioned as ID_OF_THE_CONTAINER
+Then execute:
+   docker exec -it ID_OF_THE_CONTAINER sh
+
+With the previous command you will log in in the new container
+execute:
+   export DJANGO_SETTINGS_MODULE=project_urls.settings
+   cd /code/app_urls/tests
+   pytest test*
 192.168.99.100
 
 
