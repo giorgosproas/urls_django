@@ -9,8 +9,10 @@ WORKDIR /code
 COPY requirements.txt .
 
 
-# # Download and install a dependency
+# Download and install a dependency
 RUN pip install -r requirements.txt
+ENV DJANGO_SETTINGS_MODULE=project_urls.settings
+ENV TEST_PATH=/code/app_urls/tests/
 
 # COPY DJANGO PROJECT
 COPY project_urls . 
@@ -18,3 +20,4 @@ COPY project_urls .
 # Tell the image what to do when
 # it starts as a container
 CMD [ "python", "./manage.py", "runserver", "0.0.0.0:8000"]
+
