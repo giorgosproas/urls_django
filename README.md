@@ -30,3 +30,9 @@ Having docker installed:
    to cover the cases by deleting or adding a new row in the database as needed. Also because
    of time limitations i didnt add fixtures (and thats the main reason the code seems repetitive)
    In case more time is available the pytests have to fixed and fixtures have to be used instead.
+
+# Next steps
+
+1. Use Dockercompose to create 2 containers. One with the django image and one with the database
+   and make changes to django configuration so it works correctly.
+2. Write more documentation.
