@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import api_view
 
-from app_urls.utils.response import JsonResponses, redirectResponse
+from app_urls.utils.response import JsonResponses, RedirectionResponses,redirectResponse
 from app_urls.utils.regexUtils import isValidShortcode
 from app_urls.utils.shortcodeGenerator import get_shortcode
 from app_urls.utils.datetimeUtils import militaryTimeNow
@@ -69,7 +69,7 @@ def shortcodeView(request,shortcode):
         obj.redirectCount+=1
         obj.lastRedirect=militaryTimeNow()
         obj.save()
-        return redirectResponse("302",obj.url)
+        return RedirectionResponses(status=302,url=obj.url)
     else:
         return JsonResponses(status=404,jsonReponse={"ERROR":"Shortcode not found"})
 
@@ -80,7 +80,7 @@ def shortcodeStatsView(request,shortcode):
     if URLS.objects.filter(shortcode=shortcode).exists():
         obj=URLS.objects.filter(shortcode=shortcode)[0]
         return JsonResponses(status=200,jsonReponse={"created":obj.created,\
-                                         "lastRedirect":obj.lastRedirect,\
-                                         "redirectCount":obj.redirectCount})
+                                                     "lastRedirect":obj.lastRedirect,\
+                                                     "redirectCount":obj.redirectCount})
     else:
         return JsonResponses(status=404,jsonReponse={"ERROR":"Shortcode not found"})
