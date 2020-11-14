@@ -9,6 +9,7 @@ from app_urls.utils.shortcodeGenerator import get_shortcode
 from app_urls.utils.datetimeUtils import militaryTimeNow
 from app_urls.models import URLS
 
+
 def test_shorten_smoke():
 
     # Check if in the database we already have the specific url and delete it.

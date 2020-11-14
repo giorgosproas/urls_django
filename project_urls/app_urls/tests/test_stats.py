@@ -6,6 +6,7 @@ from app_urls.tests import constants
 from app_urls.models import URLS
 from app_urls.utils.datetimeUtils import militaryTimeNow, compareMilitaryTime
 
+
 def test_stats_notFoundShortcode():
 
     # Check if in the database we already have the specific shortcode and delete it.

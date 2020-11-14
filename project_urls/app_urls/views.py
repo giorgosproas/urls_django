@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import api_view
 
-from app_urls.utils.response import errorResponse, successfulResponse, redirectResponse
+from app_urls.utils.response import JsonResponses, redirectResponse
 from app_urls.utils.regexUtils import isValidShortcode
 from app_urls.utils.shortcodeGenerator import get_shortcode
 from app_urls.utils.datetimeUtils import militaryTimeNow
@@ -27,9 +27,9 @@ def shortenView(request):
     try:
         url=jsonResponse["url"]
         if URLS.objects.filter(url=url).exists():
-                return errorResponse("409","URL already in use")
+                return JsonResponses(status=409,jsonReponse={"ERROR": "URL already in use"})
     except:
-        return errorResponse("400",'Url not present')
+        return JsonResponses(status=400,jsonReponse={"ERROR": 'Url not present'})
 
     # Check if the shortcode exists in request body. If True then do all actions mentioned below.
     # If not then create a new random shortcode and loop until this random shortcode is not in the database
@@ -43,14 +43,14 @@ def shortenView(request):
         # successfull code.
         if isValidShortcode(shortcode):
             if URLS.objects.filter(shortcode=shortcode).exists():
-                return errorResponse("409","Shortcode already in use")
+                return JsonResponses(status=409,jsonReponse={"ERROR": "Shortcode already in use"})
             else:
                 item = URLS(url=url,shortcode=shortcode,created=militaryTimeNow(),\
                             lastRedirect="",redirectCount=0)
                 item.save()
-                return successfulResponse("201",{"shortcode":shortcode}) 
+                return JsonResponses(status=201,jsonReponse={"shortcode":shortcode})
         else:
-            return errorResponse("412",'The provided shortcode is invalid')      
+            return JsonResponses(status=412,jsonReponse={"ERROR":'The provided shortcode is invalid'})      
     except:
         while True:
             shortcode = get_shortcode(6)
@@ -59,7 +59,7 @@ def shortenView(request):
                             lastRedirect="",redirectCount=0)
                 item.save()
                 break
-        return successfulResponse("201",{"shortcode":shortcode})
+        return JsonResponses(status=201,jsonReponse={"shortcode":shortcode})
 
 @api_view(['GET'])
 @csrf_exempt     
@@ -71,7 +71,7 @@ def shortcodeView(request,shortcode):
         obj.save()
         return redirectResponse("302",obj.url)
     else:
-        return errorResponse("404","Shortcode not found")
+        return JsonResponses(status=404,jsonReponse={"ERROR":"Shortcode not found"})
 
     
 @api_view(['GET'])
@@ -79,8 +79,8 @@ def shortcodeView(request,shortcode):
 def shortcodeStatsView(request,shortcode):
     if URLS.objects.filter(shortcode=shortcode).exists():
         obj=URLS.objects.filter(shortcode=shortcode)[0]
-        return successfulResponse("200",{"created":obj.created,\
+        return JsonResponses(status=200,jsonReponse={"created":obj.created,\
                                          "lastRedirect":obj.lastRedirect,\
                                          "redirectCount":obj.redirectCount})
     else:
-        return errorResponse("404","Shortcode not found")
+        return JsonResponses(status=404,jsonReponse={"ERROR":"Shortcode not found"})

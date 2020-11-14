@@ -5,6 +5,7 @@ import json
 from app_urls.tests import constants
 from app_urls.models import URLS
 
+
 def test_getShortcode_smoke():
 
     # Check if in the database we already have the specific url and delete it.
