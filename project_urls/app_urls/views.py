@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.decorators import api_view
 
-from app_urls.utils.response import JsonResponses, RedirectionResponses,redirectResponse
+from app_urls.utils.response import JsonResponses, RedirectionResponses
 from app_urls.utils.regexUtils import isValidShortcode
 from app_urls.utils.shortcodeGenerator import get_shortcode
 from app_urls.utils.datetimeUtils import militaryTimeNow
